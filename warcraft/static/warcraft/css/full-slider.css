@@ -7,6 +7,9 @@
 html,
 body {
     height: 100%;
+    font-family: 'Autopiaregular'; 
+    font-weight: normal; 
+    font-style: normal; 
 }
 
 .carousel,
@@ -24,12 +27,14 @@ body {
 .fill {
     width: 100%;
     height: 100%;
+   /* border-style: solid;
+    border-top-width: 100px;*/
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    margin-top: 20px;
+    /* margin-top: 1%; */
 }
 
 .fill2 {
@@ -38,6 +43,7 @@ body {
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
+    background-size: cover;
     background-size: 100vw 100vh;
     -o-background-size: cover;
 }
@@ -72,9 +78,13 @@ body {
     right: 50px;
 }
 
-/*.imgBox1:hover, .imgBox1:active{ 
-    border: solid 1px #CCC; -moz-box-shadow: 1px 1px 5px #999; -webkit-box-shadow: 1px 1px 5px #999; box-shadow: 1px 1px 5px #999;
-}*/
+.imgBox1:hover, .imgBox1:active{ 
+    background-image: url("../images/home/loginh_button.png");
+}
+
+.imgBox2:hover, .imgBox2:active{
+    background-image: url("../images/home/registerh_button.png");
+}
 
 footer {
     margin: 50px 0;
@@ -83,7 +93,7 @@ footer {
 .dwnld-button {
   position: absolute;
   right: 15%;
-  bottom: 15%;
+  bottom: 13%;
   left: 15%;
   z-index: 10;
   padding-top: 20px;

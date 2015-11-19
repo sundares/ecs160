@@ -8,7 +8,6 @@
 
     <head>
         <link rel="stylesheet" type="text/css" href="{% static 'warcraft/css/register_style.css' %}"/>
-        <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/medievalsharp" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>        
         <title>ChrisCraft Registration</title>
     </head>
@@ -17,11 +16,13 @@
     
     {% block content %}
         
-    
-       <h1 class="register-title fstyle">Register for ChrisCraft</h1>
+    <div class="animate fadeIn one">
+            
+            
+       <h1 class="animate fadeIn one register-title fstyle">Register for ChrisCraft</h1>
         <!--<div class="register">-->
         
-        <form class = "register fstyle" enctype="multipart/form-data" action="/accounts/register/" method="post">
+        <form class = "register fstyle animate fadeIn one" enctype="multipart/form-data" action="/accounts/register/" method="post">
             
             <h3> Please enter your information below: </h3>
             
@@ -55,7 +56,7 @@
         
         </form>
         
-        
+        </div>
     
     {% endblock %}
 

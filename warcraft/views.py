@@ -84,14 +84,16 @@ def login(request):
                 if user.is_active:
                     user.login_web = True
                     django_login(request, user)
-                    return redirect('/accounts/loggedin')
+                    return HttpResponseRedirect('/accounts/loggedin')
                 else:
-                    message = "You are not a verified user, please check your email."
-                    return render(request, 'warcraft/invalid_login.html', {'user_name': "",'message':message})
+                    message = user.userName + ": You are not a verified user, please check your email."
+                    form.add_error(None, message)
+                    return render_to_response('warcraft/login.html', {'form': form}, context_instance=RequestContext(request))
             else:
-                return HttpResponseRedirect('/accounts/invalid')
+                form.add_error(None, 'Sorry invalid username or password')
+                return render_to_response('warcraft/login.html', {'form': form}, context_instance=RequestContext(request))
         else:
-            print form.errors
+            return render_to_response('warcraft/login.html', {'form': form}, context_instance=RequestContext(request))
     else:
         form = AuthenticationForm()
     return render_to_response('warcraft/login.html', {'form': form,}, context_instance=RequestContext(request))
@@ -128,18 +130,11 @@ def activate(request, userName, activation_key):
 
 def logout(request):
     django_logout(request)
-    return render_to_response('warcraft/logout.html')
+    return HttpResponseRedirect('/warcraft')
 
 def loggedin(request):
-    picture = request.user.picture
-    fname = request.user.firstName
-    lname = request.user.lastName
-    wins = request.user.get_wins
-    losses = request.user.get_losses
-    rating = request.user.get_rating
-    ranking = request.user.get_ranking
-    return render(request, 'warcraft/loggedin.html', {'full_name': fname+" "+lname, 'avatar':picture, 'wins': wins, 'losses': losses, 'rating': rating, 'ranking': ranking})
-
+    return render(request, 'warcraft/index2.html')
+    
 def invalid_login(request):
     message= "Invalid login credentials"
     emptystring=""
@@ -157,7 +152,7 @@ def edit_profile(request):
             fname = request.user.firstName
             lname = request.user.lastName
             email = request.user.email
-            return render(request, 'warcraft/edit_profile_success.html', {'full_name': fname+" "+lname, 'picture':picture, 'email':email})
+            return render(request, 'warcraft/edit_success.html', {'full_name': fname+" "+lname, 'picture':picture, 'email':email})
     else:
         form = EditProfileForm(instance=request.user)
     return render(request, 'warcraft/edit_profile.html', {'form': form})
@@ -192,7 +187,7 @@ def register_user(request):
             link = "http://sundares.koding.io/accounts/activate/%s/%s/" %(user.userName, user.confirmation_key)
             picture = user.picture
             d = Context({'username':user.userName, 'link':link, 'avatar':picture}) 
-            message = "%s please visit http://apmishra100.koding.io/accounts/activate/%s/%s/ to activate your account." %(user.userName, user.userName, user.confirmation_key)
+            message = "%s please visit http://sundares.koding.io/accounts/activate/%s/%s/ to activate your account." %(user.userName, user.userName, user.confirmation_key)
             plaintext = get_template('warcraft/email.txt')
             htmly = get_template('warcraft/email.html')
             text_content = plaintext.render(d)
