@@ -20,7 +20,8 @@ body {
   background-color: #131413;
   background-image: url("../images/login_bg.jpg");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  /*background-size: 100% 100%;*/
+   background-size: 100vw 100vh;
 }
 
 .container {

@@ -1,13 +1,23 @@
+html,
+body{
+  
+  background-image: url("../images/new_ranking.jpg");
+  background-repeat: repeat;
+  background-size: cover;
+}
 table { 
-  width: 100%; 
+  
   border-collapse: collapse; 
 }
 /* Zebra striping */
+tr:nth-of-type(even){
+    background:#483326;
+}
 tr:nth-of-type(odd) { 
-  background: #eee; 
+  background:#2B1507; 
 }
 th { 
-  background: #FF7519; 
+  background: #551C05; 
   color: white; 
   font-weight: bold; 
 }

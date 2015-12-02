@@ -24,64 +24,105 @@
 <body>
   
   <div id="titlebox" class="animate fadeIn one">
-    <h2 style="color: white">ChrisCraft: Edit User Settings</h2> 
+    <h2 style="color: white">ChrisCraft: User Profile</h2> 
   </div>
  
   
   <div id="thebox" class="animate fadeIn one" >
     <div id="contents" class="clearfix">
       
-      <h1 style="color: white">Change Account Settings</h1>
+      <h1 style="color: white">Hi, {{ request.user.firstName }}!</h1>
       <div  id="userphoto" ><img src="{{ MEDIA_URL }}{{ avatar }}{{ request.user.picture }}" alt="Avatar" width="175" height="175">
                <h2 style="color: white" ><b>{{ user }}</b></h2>
       </div>
       <nav id="profiletabs">
         <ul class="clearfix">
-          <li><a href="#bio" class="sel">Personal</a></li>
-          <li><a href="#messages">Messages</a></li>
-          <li><a href="#account">Account Settings</a></li>
-          <!--<li><a href="#settings">Settings</a></li> -->
+          <li><a href="#bio" class="sel">Profile</a></li>
+          <li><a href="#messages">Edit Personal Info</a></li>
+          <li><a href="#account">Messages</a></li>
+          <li><a href="#settings">Account Settings</a></li>
         </ul>
       </nav>
       
       <section id="bio">
       
-        <p><u>Change Personal Info</u></p>
+            <!--
+            <table style="width:100%; text-align: left; font-size: 1.2em"><tr><td>Ranking</td><td>Wins</td><td>Losses</td><td>Rating</td></tr>
+              <tr><td>{{ranking}}</td><td>{{wins}}</td><td>{{losses}}</td><td>{{rating}}</td></tr>
+          </table> -->
+          
+          <p style:"font-size: 1.6em;" >Name: {{ request.user.firstName }} {{ request.user.lastName }}</p>
+          <p style:"font-size: 1.6em;" >E-mail: {{ request.user.email }}</p>
+          <p style:"font-size: 1.6em;" >Notification Frequency: {% if request.user.emailEvery == 0 %}Immediate{% endif %}
+                                        {% if request.user.emailEvery == 10 %}Every 10 Minutes{% endif %}
+                                        {% if request.user.emailEvery == 60 %}Every Hour{% endif %}
+            </p>
+          
+          <table style="width:25%; font-size: 1.8em; line-height: 200%; color: #c0eef4;">
+                <tr>
+                    <td>Ranking:</td> 
+                    <td>{{ request.user.ranking }}</td>
+                </tr>
+                <br>
+                <tr>
+                    <td>Wins:</td> 
+                    <td>{{ request.user.wins }}</td>
+                </tr>
+                <tr>
+                    <td>Losses:</td> 
+                    <td>{{ request.user.losses }}</td>
+                </tr>
+                <tr>
+                    <td>Rating:</td> 
+                    <td>{{ request.user.rating }}</td>
+                </tr>
+            </table>
+       
+        <br>
+       
+      </section>
       
-   
+      <section id="messages" class="hidden">
         
-        <form enctype="multipart/form-data" action="/accounts/edit/" method="POST">
+         <p><u>Personal Info</u></p>
+        
+         <form enctype="multipart/form-data" action="/accounts/edit/" method="POST">
          {% csrf_token %}
           <p><label for="id_firstName">First Name:</label> <input id="id_firstName" maxlength="31" name="firstName" type="text" value = "{{ request.user.firstName }}"/></p>
             <p><label for="id_lastName">Last Name:</label> <input id="id_lastName" maxlength="31" name="lastName" type="text" value="{{ request.user.lastName }}" /></p>
             <p><label for="id_picture"></label>Current Avatar: <a href="{{ MEDIA_URL }}{{ avatar }}{{ request.user.picture }}">images/...</a> <br/>Change: <input id="id_picture" name="picture" type="file" /></p>
         
      
+       
+        
       </section>
       
-      <section id="messages" class="hidden">
+      <section id="account" class="hidden">
+        <p><u>Messaging Settings</u></p>
         
-         <p><u>Messaging Settings</u></p>
-        
+         
          <p><label for="id_emailEvery">Notification Frequency:</label> <select id="id_emailEvery" name="emailEvery">
             <option {% if request.user.emailEvery == 0 %} selected{% endif %} value="0">Immediate</option>
             <option {% if request.user.emailEvery == 10 %} selected{% endif %} value="10">Every 10 minutes</option>
             <option {% if request.user.emailEvery == 60 %} selected{% endif %} value="60">Every hour</option>
             </select></p>
             
+            <a style="font-size: 2em;" href="/messages/inbox/">Message Inbox</a>
           <br>
           <br>
           <br>
         
       </section>
-      
-      <section id="account" class="hidden">
+ 
+      <section id="settings" class="hidden">
         <p><u>Change User Settings</u></p>
         
             <p><label for="id_email">Email:</label> <input id="id_email" maxlength="75" name="email" type="text" value="{{ request.user.email }}" /></p>
             <p>Click <a href="/accounts/change_password">here</a> to change your password. </p>
-     
       </section>
+ 
+ 
+ 
  
   
     <div class="button-holder">
@@ -89,9 +130,18 @@
     </div>
         </form>
       
+      <br />
+       
+        <p style="text-align: center">Want to go back home? &nbsp;&nbsp;&nbsp;<a href="/accounts/loggedin"><img src="{% static 'warcraft/images/home2.png' %}"></a></p>
+        <p style="text-align: center">
+            Not {{request.user.firstName}} {{ request.user.lastName }}? 
+            Click <a href="/accounts/logout/"> here </a> to logout.
+        </p>
+        
+      
     </div><!-- @end #content -->
   
-   
+       
       
   </div><!-- @end #w -->
 <script type="text/javascript">
